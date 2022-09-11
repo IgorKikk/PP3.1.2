@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Новый пользователь</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h2>Новый пользователь</h2>
+    <form th:method="POST" th:object="${user}" th:action="@{/admin/adduser}">
+        <input type="hidden" th:field="*{id}" name="id"/>
+        <label>Имя</label>
+        <input type="text" th:field="*{name}" name="name"/>
+        <br><br>
+        <label>Фамилия</label>
+        <input type="text" th:field="*{surname}" name="surname"/>
+        <br><br>
+        <label>Возраст</label>
+        <input type="number" th:field="*{age}" name="age"/>
+        <br><br>
+        <label>Имя пользователя</label>
+        <input type="text" th:field="*{username}" name="username"/>
+        <br><br>
+        <label>Пароль</label>
+        <input type="text" th:field="*{password}" name="password"/>
+        <br><br>
+        <label>Роль доступа</label>
+        <select multiple="multiple" th:field="*{roles}">
+            <option th:each="role : ${allRoleList}"
+                    th:value="${role.getRoleName()}"
+                    th:text="${role.getRoleName()}">
+            </option>
+        </select>
+        <br><br>
+        <input type="submit" value="Сохранить пользователя"/>
+    </form>
+    <br><br>
+    <form th:method="GET" th:action="@{/admin/allusers}">
+        <input type="submit" value="Назад">
+    </form>
+    <br><br>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout"/>
+    </form>
+</body>
+</html>
