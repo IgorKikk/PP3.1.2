@@ -4,6 +4,7 @@ package com.example.PP312.controller;
 import com.example.PP312.model.User;
 import com.example.PP312.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,7 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public String showUser(Model model, Principal principal) {
-        User user = userService.finedUserByUsername(principal.getName());
+    public String showUser(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("user", user);
         return "/user/showUser";
     }

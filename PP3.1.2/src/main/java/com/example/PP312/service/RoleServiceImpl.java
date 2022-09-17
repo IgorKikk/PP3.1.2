@@ -31,9 +31,4 @@ public class RoleServiceImpl implements RoleService{
     public Role finedRoleByRoleName(String roleName) {
        return roleDao.finedRoleByRoleName(roleName);
     }
-
-    @Override
-    public List<Role> getAllRolesOfUser(long id) {
-        return roleDao.getAllRolesOfUser(id);
-    }
 }

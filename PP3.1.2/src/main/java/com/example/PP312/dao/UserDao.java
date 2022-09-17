@@ -20,8 +20,6 @@ public interface UserDao extends UserDetailsService {
 
     User getUser(long id);
 
-    User finedUserByUsername(String username);
-
     @Override
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 }

@@ -45,11 +45,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User finedUserByUsername(String username) {
-        return userDao.finedUserByUsername(username);
-    }
-
-    @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) {
         return userDao.loadUserByUsername(username);

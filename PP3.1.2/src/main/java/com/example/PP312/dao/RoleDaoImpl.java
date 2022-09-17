@@ -30,11 +30,4 @@ public class RoleDaoImpl implements RoleDao{
                 .setParameter("roleName", roleName);
         return  (Role) query.getSingleResult();
     }
-
-    @Override
-    public List<Role> getAllRolesOfUser(long id) {
-        return entityManager.createQuery("select r from Role r join r.users u where u.id = :id")
-                .setParameter("id", id).getResultList();
-    }
-
 }

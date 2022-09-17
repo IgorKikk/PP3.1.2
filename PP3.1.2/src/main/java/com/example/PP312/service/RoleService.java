@@ -11,6 +11,4 @@ public interface RoleService {
     List<Role> getAllRoles();
 
     Role finedRoleByRoleName(String roleName);
-
-    List<Role> getAllRolesOfUser(long id);
 }

@@ -11,6 +11,4 @@ public interface RoleDao {
     List<Role> getAllRoles();
 
     Role finedRoleByRoleName(String roleName);
-
-    List<Role> getAllRolesOfUser(long id);
 }

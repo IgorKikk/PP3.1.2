@@ -30,10 +30,12 @@ public class UserDaoImpl implements UserDao{
     @Override
     public void createUser(User user) {
         Set<Role> roleSet = new HashSet<>();
-        Iterator<Role> iterator = user.getRoles().iterator();
-        while (iterator.hasNext()) {
-            Role role = roleService.finedRoleByRoleName(iterator.next().getRoleName());
-            roleSet.add(role);
+        if(user.getRoles() != null) {
+            Iterator<Role> iterator = user.getRoles().iterator();
+            while (iterator.hasNext()) {
+                Role role = roleService.finedRoleByRoleName(iterator.next().getRoleName());
+                roleSet.add(role);
+            }
         }
         user.setRoles(roleSet);
         entityManager.persist(user);
@@ -59,7 +61,7 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public List<User> getAllUsers() {
-        return entityManager.createQuery("select u from User u", User.class).getResultList();
+        return entityManager.createQuery("select distinct u from User u join fetch u.roles", User.class).getResultList();
     }
 
     @Override
@@ -68,18 +70,14 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public User finedUserByUsername(String username) {
-        Query query = entityManager.createQuery("select u from User u where u.username = :username")
-                .setParameter("username", username);
-        return  (User) query.getSingleResult();
-    }
-
-    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-         User user = finedUserByUsername(username);
-         if(user == null) {
+        Query query = entityManager.createQuery("select u from User u join fetch u.roles where u.username = :username")
+                                   .setParameter("username", username);
+        User user = (User) query.getSingleResult();
+        if(user == null) {
              throw new UsernameNotFoundException(String.format("User %s not found", username));
-         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());
+        }
+        user.getRoles().size();
+        return user;
     }
 }
